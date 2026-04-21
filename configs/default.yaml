@@ -1,0 +1,59 @@
+# dirsearch-go 默认配置文件
+# 位置: ~/.dirsearch/config.yaml 或 /etc/dirsearch/config.yaml
+
+# 基础配置
+general:
+  threads: 30
+  max-time: 0
+  max-errors: 25
+
+# HTTP 配置
+request:
+  http-method: GET
+  user-agent: dirsearch-go
+  timeout: 10
+  delay: 0
+  random-agents: false
+
+# 认证配置
+auth:
+  auth-type: basic
+  # auth: username:password
+
+# 代理配置
+connection:
+  # proxy: http://127.0.0.1:8080
+  max-rate: 0
+  max-retries: 1
+  # tor: false
+
+# 字典配置
+dictionary:
+  wordlists: []
+  extensions:
+    - php
+    - html
+    - js
+    - txt
+  force-extensions: false
+  lowercase: false
+
+# 过滤器配置
+filters:
+  include-status: []
+  exclude-status:
+    - 400
+    - 403
+    - 404
+  # exclude-sizes: []
+  # exclude-texts: []
+  # exclude-regex: ""
+  # min-response-size: 0
+  # max-response-size: 0
+  # filter-threshold: 0
+
+# 输出配置
+output:
+  output-formats:
+    - plain
+  log-level: info

