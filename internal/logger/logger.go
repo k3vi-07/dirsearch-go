@@ -89,12 +89,28 @@ func SetQuiet(quiet bool) {
 
 // Result 输出扫描结果（简洁格式）
 func Result(status int, path string, size int64) {
+	// 根据状态码选择颜色
+	var color string
+	switch {
+	case status >= 200 && status < 300:
+		color = "\033[32m" // 绿色 - 成功
+	case status >= 300 && status < 400:
+		color = "\033[33m" // 黄色 - 重定向
+	case status >= 400 && status < 500:
+		color = "\033[31m" // 红色 - 客户端错误
+	case status >= 500:
+		color = "\033[31m" // 红色 - 服务器错误
+	default:
+		color = "\033[35m" // 紫色 - 未知
+	}
+	reset := "\033[0m"
+
 	if quietMode {
 		// 安静模式：直接输出，无日志前缀
-		fmt.Printf("[+] %d - %s - %d bytes\n", status, path, size)
+		fmt.Printf("[+] %s%d%s - %s - %d bytes\n", color, status, reset, path, size)
 	} else {
 		// 普通模式：通过日志系统
-		GetLogger().Infof("[+] %d - %s - %d bytes", status, path, size)
+		GetLogger().Infof("[+] %s%d%s - %s - %d bytes", color, status, reset, path, size)
 	}
 }
 
