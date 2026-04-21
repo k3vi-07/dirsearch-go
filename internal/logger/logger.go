@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -11,6 +12,7 @@ import (
 var (
 	// globalLogger 全局日志实例
 	globalLogger *logrus.Logger
+	quietMode    bool = false // 安静模式标志
 )
 
 // Init 初始化日志系统
@@ -28,8 +30,8 @@ func Init(logLevel string, logFile string) error {
 	globalLogger.SetFormatter(&logrus.TextFormatter{
 		ForceColors:      true,
 		DisableColors:    false,
-		FullTimestamp:    true,
-		TimestampFormat:  "2006-01-02 15:04:05",
+		FullTimestamp:    false, // 关闭时间戳，简化输出
+		TimestampFormat:  "15:04:05",
 		DisableSorting:   false,
 	})
 
@@ -78,6 +80,22 @@ func SetLevel(level logrus.Level) {
 func SetFormatter(formatter logrus.Formatter) {
 	logger := GetLogger()
 	logger.SetFormatter(formatter)
+}
+
+// SetQuiet 设置安静模式
+func SetQuiet(quiet bool) {
+	quietMode = quiet
+}
+
+// Result 输出扫描结果（简洁格式）
+func Result(status int, path string, size int64) {
+	if quietMode {
+		// 安静模式：直接输出，无日志前缀
+		fmt.Printf("[+] %d - %s - %d bytes\n", status, path, size)
+	} else {
+		// 普通模式：通过日志系统
+		GetLogger().Infof("[+] %d - %s - %d bytes", status, path, size)
+	}
 }
 
 // Debug 记录调试日志

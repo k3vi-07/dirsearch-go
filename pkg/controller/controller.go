@@ -87,6 +87,9 @@ func NewController(cfg *config.Config) (*Controller, error) {
 		return nil, fmt.Errorf("初始化报告器失败: %w", err)
 	}
 
+	// 设置安静模式
+	logger.SetQuiet(cfg.Quiet)
+
 	return ctrl, nil
 }
 
@@ -401,8 +404,8 @@ func (c *Controller) handleResult(result *fuzzer.ScanResult) {
 		return
 	}
 
-	// 输出到日志
-	logger.Infof("[+] %d - %s - %d bytes", result.Status, result.Path, result.Size)
+	// 输出结果（简洁格式，quiet模式由logger内部处理）
+	logger.Result(int(result.Status), result.Path, result.Size)
 
 	// 收集结果到列表
 	c.mu.Lock()

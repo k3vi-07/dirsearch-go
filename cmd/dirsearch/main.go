@@ -78,7 +78,7 @@ func main() {
 	rootCmd.Flags().StringVar(&cfg.NetworkIf, "network-interface", "", "网络接口")
 
 	// 字典选项
-	rootCmd.Flags().StringSliceVarP(&cfg.Wordlists, "wordlists", "w", []string{}, "字典文件（不指定则使用内置446条字典）")
+	rootCmd.Flags().StringSliceVarP(&cfg.Wordlists, "wordlists", "w", []string{}, "字典文件（不指定则使用内置9680条字典）")
 	rootCmd.Flags().BoolVar(&cfg.StdinWordlist, "stdin-wordlist", false, "从标准输入读取字典")
 	rootCmd.Flags().StringSliceVarP(&cfg.Extensions, "extensions", "x", []string{"php", "html", "js"}, "扩展名")
 	rootCmd.Flags().BoolVar(&cfg.ForceExtensions, "force-extensions", false, "强制扩展名")
@@ -117,6 +117,7 @@ func main() {
 	rootCmd.Flags().StringVarP(&cfg.OutputFile, "output", "o", "", "输出文件")
 	rootCmd.Flags().StringVar(&cfg.LogFile, "log-file", "", "日志文件")
 	rootCmd.Flags().StringVar(&cfg.LogLevel, "log-level", "info", "日志级别 (debug/info/warn/error)")
+	rootCmd.Flags().BoolVarP(&cfg.Quiet, "quiet", "q", false, "安静模式（仅显示结果）")
 
 	// 会话选项
 	rootCmd.Flags().StringVar(&cfg.SessionFile, "session", "", "会话文件")
@@ -166,7 +167,7 @@ func run(cmd *cobra.Command, args []string) {
 
 	// 字典处理：如果未指定，使用内置默认字典（在验证之前）
 	if len(loadedCfg.Wordlists) == 0 {
-		logger.Info("未指定字典，使用内置默认字典 (446条路径)")
+		logger.Info("未指定字典，使用内置默认字典 (9680条路径)")
 		loadedCfg.Wordlists = []string{"__builtin__"} // 标记使用内置字典
 	}
 
@@ -277,6 +278,9 @@ func mergeConfig(loaded *config.Config, cmdCfg *config.Config) {
 	}
 	if cmdCfg.OutputFile != "" {
 		loaded.OutputFile = cmdCfg.OutputFile
+	}
+	if cmdCfg.Quiet { // 安静模式
+		loaded.Quiet = cmdCfg.Quiet
 	}
 
 	// 过滤器

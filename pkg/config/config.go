@@ -86,6 +86,7 @@ type Config struct {
 	OutputFile     string   `yaml:"output-file" mapstructure:"output-file"`
 	LogFile        string   `yaml:"log-file" mapstructure:"log-file"`
 	LogLevel       string   `yaml:"log-level" mapstructure:"log-level"`
+	Quiet          bool     `yaml:"quiet" mapstructure:"quiet"`
 
 	// 会话配置
 	SessionFile    string `yaml:"session" mapstructure:"session"`

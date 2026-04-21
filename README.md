@@ -22,7 +22,7 @@
 - 🔄 **递归扫描** - 3种模式（标准/深度/强制）
 - 🕷️ **爬虫功能** - HTML/robots.txt/纯文本爬取
 - ⏸️ **暂停/恢复** - 交互式信号处理
-- 📖 **内置字典** - 446条常用路径
+- 📖 **内置字典** - 9680条常用路径
 - 🌏 **中文界面** - 完整中文本地化
 - ⚡ **DNS缓存** - 5分钟TTL加速解析
 - 🚦 **速率限制** - 令牌桶算法
@@ -51,7 +51,7 @@ go build -o dirsearch cmd/dirsearch/main.go
 
 ### 基础扫描
 ```bash
-# 使用内置字典（446条路径）
+# 使用内置字典（9680条路径）
 ./dirsearch -u http://example.com
 
 # 使用自定义字典
@@ -128,7 +128,7 @@ go build -o dirsearch cmd/dirsearch/main.go
 
 ### 字典设置
 ```
--w, --wordlists <paths>        字典文件（默认使用内置446条）
+-w, --wordlists <paths>        字典文件（默认使用内置9680条）
 -e, --extensions <exts>        扩展名（php,html,js）
 --force-extensions             强制扩展名模式
 --exclude-extensions <exts>    排除扩展名
@@ -275,7 +275,7 @@ dirsearch-go/
 │   ├── dns/              # DNS缓存
 │   └── logger/           # 日志系统
 ├── db/                   # 内置字典
-│   ├── common.txt        # 446条常用路径
+│   ├── common.txt        # 9680条常用路径
 │   └── blacklists/       # 黑名单
 └── go.mod
 ```

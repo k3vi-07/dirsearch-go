@@ -92,8 +92,6 @@ func (r *PlainReporter) Add(result *fuzzer.ScanResult) error {
 		return r.writer.Write(record)
 	}
 
-	// 输出到stdout
-	fmt.Printf("[%d] %s - %d\n", result.Status, result.Path, result.Size)
 	return nil
 }
 
